@@ -16,4 +16,64 @@ class Questions extends CI_Model{
         );
         $this->db->insert('questions',$data);
     }
+
+    public function read_all($data){
+        // $this -> db -> select('*');
+        // $this->db->from('questions');
+        $query = $this->db->select('*')->from('questions');
+        if($data['filter']!=''){
+            $query->where('questions.CategoryID',($data['filter']));
+        } 
+        if($data['sort']=='newest'){
+            $query->order_by('questions.CreationDate','DESC');
+        }
+        if($data['sort']=='oldest'){
+            $query->order_by('questions.CreationDate','ASC');
+        }
+        if($data['sort']=='highest'){
+            $query->order_by('questions.Votes','DESC');
+        }
+        if($data['sort']=='lowest'){
+            $query->order_by('questions.Votes','ASC');
+        }
+        $query = $query->join('categories', 'categories.CategoryID= questions.CategoryID')
+                ->join('users','users.UserID= questions.UserID')
+                ->get();     
+        return $query->result_array();
+    }
+
+    // public function get_filteredQs($sortParameter,$filterParameter){
+    //     // $this -> db -> select('*');
+    //     // $this->db->from('questions');
+    //     // if($sortParameter){
+    //     //     $
+    //     // }
+    //     $query = $this->db->select('*')->from('questions')
+    //             ->join('categories', 'categories.CategoryID= questions.CategoryID')
+    //             ->join('users','users.UserID= questions.UserID')
+    //             ->get();     
+    //     return $query->result_array();
+    // }
+
+    public function read_userQs($uid,$data){
+        $query= $this->db->select('*')->from('questions')
+                ->where('UserID',$uid);
+                if($data['filter']!=''){
+                    $query->where('questions.CategoryID',($data['filter']));
+                } 
+                if($data['sort']=='newest'){
+                    $query->order_by('questions.CreationDate','DESC');
+                }
+                if($data['sort']=='oldest'){
+                    $query->order_by('questions.CreationDate','ASC');
+                }
+                if($data['sort']=='highest'){
+                    $query->order_by('questions.Votes','DESC');
+                }
+                if($data['sort']=='lowest'){
+                    $query->order_by('questions.Votes','ASC');
+                }
+        $query=$query->join('categories', 'categories.CategoryID= questions.CategoryID')->get();
+        return $query->result_array();
+    }
 }
