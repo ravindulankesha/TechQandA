@@ -19,8 +19,8 @@ class Questions extends CI_Model{
 
     public function read_all($data){
         // $this -> db -> select('*');
-        // $this->db->from('questions');
-        $query = $this->db->select('*')->from('questions');
+        // $this->db->from('questions'),
+        $query = $this->db->select('questions.QuestionID, questions.Title, questions.Votes,users.Username, categories.CategoryName')->from('questions');
         if($data['filter']!=''){
             $query->where('questions.CategoryID',($data['filter']));
         } 
@@ -56,7 +56,7 @@ class Questions extends CI_Model{
     // }
 
     public function read_userQs($uid,$data){
-        $query= $this->db->select('*')->from('questions')
+        $query= $this->db->select('questions.QuestionID, questions.Title, questions.Votes, categories.CategoryName')->from('questions')
                 ->where('UserID',$uid);
                 if($data['filter']!=''){
                     $query->where('questions.CategoryID',($data['filter']));
@@ -76,4 +76,5 @@ class Questions extends CI_Model{
         $query=$query->join('categories', 'categories.CategoryID= questions.CategoryID')->get();
         return $query->result_array();
     }
+
 }
