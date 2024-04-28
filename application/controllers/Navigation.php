@@ -8,6 +8,7 @@ class Navigation extends CI_Controller {
         $this->load->helper('form');
 		$this->load->model('Questions');
 		$this->load->model('Answers');
+		$this->load->model('Categories');
     }
 
 	public function profileQuestions()
@@ -28,7 +29,10 @@ class Navigation extends CI_Controller {
 
     public function askquestion()
 	{   
-        $this->load->view('ask_question');
+		$categories=$this->Categories->getCategories();
+		$data['categories']=$categories;
+		
+        $this->load->view('ask_question',$data);
 	}
 
     public function login()

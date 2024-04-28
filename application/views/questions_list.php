@@ -167,40 +167,40 @@ $(document).ready(function() {
             });
         }
     });
-    var questionView = new QuestionView();
+    // var questionView = new QuestionView();
 
-        var QuestionView = Backbone.View.extend({
-        el: '#category',
-        events: {
-            'change': 'render'
-        },
-        render: function() {
-            $.ajax({
-                url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questions', 
-                type: 'GET',
-                data: {
-                    filter: $('#category').val(),
-                    sort: $('#sort').val()
-                },
-                success: function(response) {
-                    $('#results').html('RESULTS: '+ response.length);
-                    var html='';
-                    $.each(response, function(index, item) {                   
-                        html+='<hr class="line"><div class="question">'+ item['Title']+'</div><div class="question_details">';
-                        html+='<div>Votes: '+item['Votes']+'</div>';
-                        html+='<div>Answers: ' +item['answer_count']+'</div>';
-                        html+='<div>Category: '+item['CategoryName']+'</div>';
-                        html+='<div>Asked By: '+item['Username']+'</div>';
-                        html+='<div>Go to Question Page</div></div>';
-                    });
-                    $('#questionArea').html(html);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                }
-            });
-        }
-    });
+    //     var QuestionView = Backbone.View.extend({
+    //     el: '#category',
+    //     events: {
+    //         'change': 'render'
+    //     },
+    //     render: function() {
+    //         $.ajax({
+    //             url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questions', 
+    //             type: 'GET',
+    //             data: {
+    //                 filter: $('#category').val(),
+    //                 sort: $('#sort').val()
+    //             },
+    //             success: function(response) {
+    //                 $('#results').html('RESULTS: '+ response.length);
+    //                 var html='';
+    //                 $.each(response, function(index, item) {                   
+    //                     html+='<hr class="line"><div class="question">'+ item['Title']+'</div><div class="question_details">';
+    //                     html+='<div>Votes: '+item['Votes']+'</div>';
+    //                     html+='<div>Answers: ' +item['answer_count']+'</div>';
+    //                     html+='<div>Category: '+item['CategoryName']+'</div>';
+    //                     html+='<div>Asked By: '+item['Username']+'</div>';
+    //                     html+='<div>Go to Question Page</div></div>';
+    //                 });
+    //                 $('#questionArea').html(html);
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error('Error:', error);
+    //             }
+    //         });
+    //     }
+    // });
     var questionView = new QuestionView({el: '#category' });
     var questionView2 = new QuestionView({el: '#sort'});
 });

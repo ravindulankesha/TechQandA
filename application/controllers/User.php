@@ -24,7 +24,7 @@ class User extends CI_Controller {
             if($this->session->userdata==null){
                 $this->session->userID=$verification_info->UserID;
                 $this->session->username=$verification_info->username;
-                $this->load->view('ask_question');            
+                $this->load->view('homepage');            
             }
         }
 	}

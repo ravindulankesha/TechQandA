@@ -12,7 +12,8 @@ class QuestionsAndAnswers extends CI_Controller {
 	public function askQuestion()
 	{
 		$title= $this->input->post('q_title');
-        $category= $this->input->post('q_category');
+        // $category= $this->input->post('q_category');
+        $category= $this->input->post('category');
 		$new_category= $this->input->post('new_category_name');
 		$description= $this->input->post('q_desc');
 		if($new_category!=''){
