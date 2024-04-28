@@ -14,6 +14,7 @@ class QuestionsAPI extends RestController {
         $this->load->model('Users');
         $this->load->model('Answers');
         $this->load->model('Comments');
+        $this->load->model('Categories');
     }       
     function questions_get()
     {
@@ -38,13 +39,6 @@ class QuestionsAPI extends RestController {
         $this->response($result);
     }
 
-    function user_delete($data)
-    {
-        $uid=$this->session->userID; 
-        $result = $this->Questions->delete($uid);
-        $this->response($result);
-    }
-
     function questionComments_get(){
         $data = $this->input->get('qID');
         $comments=$this->Comments->getQComments($data);
@@ -58,6 +52,26 @@ class QuestionsAPI extends RestController {
             $answers[$key]["comments"]=$this->Comments->commentsList($value['AnswerID']);
         }
         $this->response($answers);
-        // var_dump($answersWithComments);
+    }
+
+    function questionCategories_get(){
+        $categories=$this->Categories->getCategories();
+        $this->response($categories);
+    }
+
+    function questionComment_post(){
+        $data=array('name' => $this->input->post('name'),
+        'pass' => $this->input->post('pass'),
+        'type' => $this->input->post('type')
+        );
+    }
+
+    function questionSearch_post(){
+        $input= $this->input->post('searchInput');
+        $response=$this->Questions->getQuestionsList($input);
+        foreach($response as $key=>$value){
+            $response[$key]["answer_count"]=$this->Answers->answerCount($value['QuestionID']);
+        }
+        $this->response($response);
     }
 }

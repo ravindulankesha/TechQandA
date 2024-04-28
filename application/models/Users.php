@@ -44,4 +44,9 @@ class Users extends CI_Model{
             return NULL;
         }
     }
+
+    public function delete($uid){
+        $this->db->where('UserID', $uid);
+        $this->db->delete('users');
+    }
 }

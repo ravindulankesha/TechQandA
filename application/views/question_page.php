@@ -30,9 +30,13 @@ HWIOAuthBundle github: https://github.com/hwi/HWIOAuthBundle
                 <div>previous</div>
                 <div>next</div>
             </div>
-        </div>
+        </div>   
         <hr class="line">
         <p class="tiny_font">Have you done a composer self-update lately? Not sure if the 1.4.2 in your error message indicates version 1.4.2 but the latest version of composer is 1.6.2. And how much physical memory do you have? Is it a vm or cloud server? - robinwilliams87</p>
+        <div class="sub_block">
+            <div><textarea cols="40" rows="3" name="q_desc" class="submit_comment"></textarea></div>
+            <div class="vote">Comment</div>
+        </div>
     </div>
     <div class="main_block">
         <div class="sub_block">

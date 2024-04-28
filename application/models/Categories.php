@@ -20,4 +20,9 @@ class Categories extends CI_Model{
         $result = $this->db->get();
         return $result->row();
     }
+
+    public function getCategories(){
+        $query= $this->db->select('*')->from('categories')->get();
+        return $query->result_array();
+    }
 }

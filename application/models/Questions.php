@@ -77,4 +77,10 @@ class Questions extends CI_Model{
         return $query->result_array();
     }
 
+    public function getQuestionsList($input){
+        $query=$this->db->select('questions.QuestionID, questions.Title, questions.Votes,users.Username, categories.CategoryName')->from('questions')->like('Title',$input);
+        $query = $query->join('categories', 'categories.CategoryID= questions.CategoryID')
+                ->join('users','users.UserID= questions.UserID')->get();
+        return $query->result_array();
+    }
 }

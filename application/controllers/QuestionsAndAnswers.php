@@ -23,6 +23,6 @@ class QuestionsAndAnswers extends CI_Controller {
 		$categoryID=$categoryDetails->CategoryID;
 		$userID=$this->session->userdata('userID');
 		$this->Questions->postQuestion($title,$description,$userID,$categoryID);
-		$this->load->view('questions_list');
+		$this->load->view('homepage');
 	}
 }

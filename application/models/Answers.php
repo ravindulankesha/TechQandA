@@ -35,4 +35,8 @@ class Answers extends CI_Model{
         return $query->result_array();
     }
 
+    public function get_questionID($aID){
+        $query=$this->db->select('QuestionID')->from('answers')->where('AnswerID',$aID)->get()->row();
+        return $query->QuestionID;
+    }
 }

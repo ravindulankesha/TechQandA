@@ -6,6 +6,8 @@ class Navigation extends CI_Controller {
     {
         parent::__construct();
         $this->load->helper('form');
+		$this->load->model('Questions');
+		$this->load->model('Answers');
     }
 
 	public function profileQuestions()
@@ -14,8 +16,14 @@ class Navigation extends CI_Controller {
 	}
 
     public function questionslist()
-	{   
-        $this->load->view('questions_list');
+	{  
+		$input= $this->input->post('searchInput');
+        $response=$this->Questions->getQuestionsList($input);
+		foreach($response as $key=>$value){
+            $response[$key]["answer_count"]=$this->Answers->answerCount($value['QuestionID']);
+        }
+		$data["questions"]=$response;
+        $this->load->view('questions_list',$data);
 	}
 
     public function askquestion()
@@ -38,5 +46,11 @@ class Navigation extends CI_Controller {
 		$this->session->username=null;
 		$this->load->view('homepage');
 	}
+
+	public function questionPage()
+	{   
+        $this->load->view('question_page');
+	}
+
 
 }
