@@ -16,7 +16,7 @@ include("nav_bar.php");
                     <?php foreach ($categories as $category): ?>
                         <span>
                             <input type="radio" value="<?php echo $category['CategoryName'] ?>" name="category" class="categories" id="<?php echo $category['CategoryID'] ?>">
-                            <label class="buttons_set" id="cat1" for="<?php echo $category['CategoryID'] ?>"><?php echo $category['CategoryName'] ?></label>
+                            <label class="buttons_set" for="<?php echo $category['CategoryID'] ?>"><?php echo $category['CategoryName'] ?></label>
                         </span>    
                     <?php endforeach; ?>   
                     <!-- <span>
