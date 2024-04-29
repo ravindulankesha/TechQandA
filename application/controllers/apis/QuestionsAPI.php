@@ -36,6 +36,9 @@ class QuestionsAPI extends RestController {
             'sort' => $this->input->get('sort')
         );
         $result = $this->Questions->read_userQs($uid,$data);
+        foreach($result as $key=>$value){
+            $result[$key]["answer_count"]=$this->Answers->answerCount($value['QuestionID']);
+        }
         $this->response($result);
     }
 
@@ -47,7 +50,8 @@ class QuestionsAPI extends RestController {
 
     function questionInfo_get(){
         $data = $this->input->get('qID');
-        $answers = $this->Answers->answers($data);
+        $sort = $this->input->get('sort');
+        $answers = $this->Answers->answers($data,$sort);
         foreach($answers as $key=>$value){
             $answers[$key]["comments"]=$this->Comments->commentsList($value['AnswerID']);
         }
@@ -73,5 +77,23 @@ class QuestionsAPI extends RestController {
             $response[$key]["answer_count"]=$this->Answers->answerCount($value['QuestionID']);
         }
         $this->response($response);
+    }
+
+    function questionDetails_get(){
+        $data = $this->input->get('qID');
+        $sort = $this->input->get('sort');
+        $qDetails = $this->Questions->getQDetails($data);
+        $comments=$this->Comments->getQComments($data);
+        $answers = $this->Answers->answers($data,$sort);
+        foreach($answers as $key=>$value){
+            $answers[$key]["comments"]=$this->Comments->commentsList($value['AnswerID']);
+        }
+        $qDetails['comments']=$comments;
+        // $result=array();
+        // array_push($result,$qDetails);
+        // array_push($result,$comments);
+        $qDetails['answers']=$answers;
+
+        $this->response($qDetails);
     }
 }

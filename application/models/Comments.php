@@ -22,7 +22,7 @@ class Comments extends CI_Model{
         if($sort=='newest'){
             $query->order_by('CreationDate','DESC');
         }
-        if($sort=='oldest'){
+        if($sort!='newest'){
             $query->order_by('CreationDate','ASC');
         }
         $query= $query->get();

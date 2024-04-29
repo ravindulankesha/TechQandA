@@ -13,8 +13,8 @@ include("searchbar.php");
     </div>
     <div>SORT BY:
         <select id='sort' class="selectMenu">
-            <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
+            <option value="newest">Newest</option>
             <option value="highest">highest Votes</option>
             <option value="lowest">Lowest Votes</option>
         </select>
@@ -29,7 +29,7 @@ include("searchbar.php");
             <div>Answers: <?php echo $question['answer_count'] ?></div>
             <div>Category: <?php echo $question['CategoryName'] ?></div>
             <div>Asked By: <?php echo $question['Username'] ?></div>
-            <div>Go to Question Page</div>
+            <div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID=<?php echo $question['QuestionID'];?>">Go to Question Page</a></div>
         </div>
     <?php endforeach; ?>    
     <!-- <hr class="line">   
@@ -157,7 +157,7 @@ $(document).ready(function() {
                         html+='<div>Answers: ' +item['answer_count']+'</div>';
                         html+='<div>Category: '+item['CategoryName']+'</div>';
                         html+='<div>Asked By: '+item['Username']+'</div>';
-                        html+='<div>Go to Question Page</div></div>';
+                        html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
                     });
                     $('#questionArea').html(html);
                 },

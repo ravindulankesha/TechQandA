@@ -6,8 +6,21 @@ class Answers extends CI_Model{
         $this->load->database();
     }
 
-    public function answers($data){
-        $query= $this->db->select('answers.AnswerID,answers.Answer,answers.Votes,users.Username')->from('answers')->where('QuestionID',$data)->join('users','users.UserID= answers.UserID')->get();
+    public function answers($data,$sort){
+        $query= $this->db->select('answers.AnswerID,answers.Answer,answers.Votes,users.Username, answers.CreationDate')->from('answers')->where('QuestionID',$data);
+                if($sort=='newest'){
+                    $query->order_by('answers.CreationDate','DESC');
+                }
+                if($sort=='oldest'){
+                    $query->order_by('answers.CreationDate','ASC');
+                }
+                if($sort=='highest'){
+                    $query->order_by('answers.Votes','DESC');
+                }
+                if($sort=='lowest'){
+                    $query->order_by('answers.Votes','ASC');
+                }
+        $query=$query->join('users','users.UserID= answers.UserID')->get();
         return $query->result_array();
 
     }
@@ -18,7 +31,7 @@ class Answers extends CI_Model{
     }
 
     public function read_userAs($uid,$sort){
-        $query= $this->db->select('questions.QuestionID, answers.Answer, answers.Votes')->from('answers')->where('questions.UserID',$uid);
+        $query= $this->db->select('questions.QuestionID, answers.Answer, answers.Votes, answers.CreationDate')->from('answers')->where('answers.UserID',$uid);
                 if($sort=='newest'){
                     $query->order_by('answers.CreationDate','DESC');
                 }

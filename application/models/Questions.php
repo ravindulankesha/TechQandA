@@ -56,7 +56,7 @@ class Questions extends CI_Model{
     // }
 
     public function read_userQs($uid,$data){
-        $query= $this->db->select('questions.QuestionID, questions.Title, questions.Votes, categories.CategoryName')->from('questions')
+        $query= $this->db->select('questions.QuestionID, questions.Title, questions.CreationDate, questions.Votes, categories.CategoryName')->from('questions')
                 ->where('UserID',$uid);
                 if($data['filter']!=''){
                     $query->where('questions.CategoryID',($data['filter']));
@@ -79,6 +79,13 @@ class Questions extends CI_Model{
 
     public function getQuestionsList($input){
         $query=$this->db->select('questions.QuestionID, questions.Title, questions.Votes,users.Username, categories.CategoryName')->from('questions')->like('Title',$input);
+        $query = $query->join('categories', 'categories.CategoryID= questions.CategoryID')
+                ->join('users','users.UserID= questions.UserID')->get();
+        return $query->result_array();
+    }
+
+    public function getQDetails($data){
+        $query=$this->db->select('questions.QuestionID, questions.Description, questions.CreationDate,questions.Title, questions.Votes,users.Username, categories.CategoryName')->from('questions')->where('QuestionID',$data);
         $query = $query->join('categories', 'categories.CategoryID= questions.CategoryID')
                 ->join('users','users.UserID= questions.UserID')->get();
         return $query->result_array();
