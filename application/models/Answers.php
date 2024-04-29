@@ -52,4 +52,29 @@ class Answers extends CI_Model{
         $query=$this->db->select('QuestionID')->from('answers')->where('AnswerID',$aID)->get()->row();
         return $query->QuestionID;
     }
+
+    public function answerUpvote($id){
+        $this->db->set('Votes', 'Votes+1', false)->where('AnswerID' , $id)->update('answers');
+
+        $query=$this->db->select("Votes")->from('answers')->where('AnswerID' , $id)->get();
+        return $query->result_array();
+    }
+
+    public function answerDownvote($id){
+        $this->db->set('Votes', 'Votes-1', false)->where('AnswerID' , $id)->update('answers');
+
+        $query=$this->db->select("Votes")->from('answers')->where('AnswerID' , $id)->get();
+        return $query->result_array();
+    }
+
+    public function postAnswer($qID,$answer,$uid){
+        $data = array(
+            'QuestionID' => $qID,
+            'UserID' => $uid,
+            'Answer' => $answer,
+            'Votes' => 0
+        );
+        
+        $this->db->insert('Answers', $data);
+    }
 }

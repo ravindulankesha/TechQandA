@@ -90,4 +90,18 @@ class Questions extends CI_Model{
                 ->join('users','users.UserID= questions.UserID')->get();
         return $query->result_array();
     }
+
+    public function questionUpvote($id){
+        $this->db->set('Votes', 'Votes+1', false)->where('QuestionID' , $id)->update('questions');
+
+        $query=$this->db->select("Votes")->from('questions')->where('QuestionID' , $id)->get();
+        return $query->result_array();
+    }
+
+    public function questionDownvote($id){
+        $this->db->set('Votes', 'Votes-1', false)->where('QuestionID' , $id)->update('questions');
+
+        $query=$this->db->select("Votes")->from('questions')->where('QuestionID' , $id)->get();
+        return $query->result_array();
+    }
 }

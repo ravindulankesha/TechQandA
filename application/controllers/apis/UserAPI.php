@@ -12,6 +12,7 @@ class UserAPI extends RestController {
         $this->load->library('session');
         $this->load->model('Answers');
         $this->load->model('Comments');
+        $this->load->model('Questions');
         $this->load->model('Users');
     }
 
@@ -48,5 +49,35 @@ class UserAPI extends RestController {
         $this->load->view('homepage');
     }
 
-    
+    function upvoteAnswer_get(){
+        $id = $this->input->get('aID');
+        $response=$this->Answers->answerUpvote($id);
+        $this->response($response);
+    }
+
+    function downvoteAnswer_get(){
+        $id = $this->input->get('aID');
+        $response=$this->Answers->answerDownvote($id);
+        $this->response($response);
+    }
+
+    function upvoteQuestion_get(){
+        $id = $this->input->get('qID');
+        $response=$this->Questions->questionUpvote($id);
+        $this->response($response);
+    }
+
+    function downvoteQuestion_get(){
+        $id = $this->input->get('qID');
+        $response=$this->Questions->questionDownvote($id);
+        $this->response($response);
+    }
+
+    function submitAnswer_post(){
+        $uid=$this->session->userID;    
+        $qID=$this->input->post('qID');
+        $answer=$this->input->post('answer');
+        $execution=$this->Answers->postAnswer($qID,$answer,$uid);
+        $this->response($qID);
+    }
 }
