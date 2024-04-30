@@ -65,7 +65,7 @@ $(document).ready(function() {
                 html+='<hr class="line"><div class="question">'+ item['Answer']+'</div><div class="question_details">';
                 html+='<div>Votes: '+item['Votes']+'</div>';
                 html+='<div>Submitted On: '+item['CreationDate'].substring(0,11)+'</div>';
-                html+='<div>edit</div>';
+                // html+='<div>edit</div>';
                 html+='<div class="delete">delete</div>';
                 html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
             });

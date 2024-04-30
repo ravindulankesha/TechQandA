@@ -77,4 +77,14 @@ class Answers extends CI_Model{
         
         $this->db->insert('Answers', $data);
     }
+
+    public function submitComment($userID,$aid,$text){
+        $data = array(
+            'Comment' => $text,
+            'AnswerID' => $aid,
+            'UserID' => $userID
+        );
+
+        $this->db->insert('comments', $data);
+    }
 }

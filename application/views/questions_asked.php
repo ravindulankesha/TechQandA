@@ -103,10 +103,13 @@ include("profile_base.php");
 </div>
     </div>
 </div>
+
+
 </body>
 </html>
 <script>
 $(document).ready(function() {
+    
     $.ajax({
         url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questionCategories',
         type: 'GET',
@@ -185,6 +188,8 @@ $(document).ready(function() {
     var questionView = new QuestionView({el: '#profile_select_Qs' });
     var questionView2 = new QuestionView({el: '#profile_select_sort'});
 });
+
+
 </script>
 <style>
 
@@ -195,3 +200,5 @@ $(document).ready(function() {
     #profileQ{
         color: #ffffff;
     }
+
+    

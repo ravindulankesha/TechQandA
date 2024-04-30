@@ -104,4 +104,14 @@ class Questions extends CI_Model{
         $query=$this->db->select("Votes")->from('questions')->where('QuestionID' , $id)->get();
         return $query->result_array();
     }
+
+    public function submitComment($userID,$qid,$text){
+        $data = array(
+            'Comment' => $text,
+            'QuestionID' => $qid,
+            'UserID' => $userID
+        );
+        
+        $this->db->insert('comments', $data);
+    }
 }

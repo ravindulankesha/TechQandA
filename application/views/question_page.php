@@ -12,7 +12,7 @@ include("searchbar.php");
         <div id='view_cat'>Category</div>
         <div id='view_name'>Posted By</div>
         <div class="actions">
-            <div class="comment">comment</div>
+            <div class="comment" onclick="commentQues()">comment</div>
             <div class="vote" id="ques_upvote">upvote</div>
             <div id="view_qvotes">34</div>
             <div class="vote" id="ques_downvote">downvote</div>
@@ -104,12 +104,41 @@ include("searchbar.php");
             <hr class="line">
             <p class="tiny_font">Have you done a composer self-update lately? Not sure if the 1.4.2 in your error message indicates version 1.4.2 but the latest version of composer is 1.6.2. And how much physical memory do you have? Is it a vm or cloud server? - robinwilliams87</p>
         </div> -->
-    </div>  
+    </div> 
+
+</div>
+<div class="center hideform">
+    <button id="close" class="popupclose" style="float: right;">X</button>
+    <form method="post" action="<?php echo base_url(); ?>index.php/QuestionsAndAnswers/submitAnswerComment">
+        <input type="hidden" name="acommentInput" id="acommentInput">
+        <textarea cols="40" rows="3" name="ans_comment" class="submitpopup"></textarea>
+        <input type="submit" value="Submit Comment">
+    </form>
+</div>
+
+<div class="qcomment hideform">
+    <button id="closeqpopup" class="popupclose" style="float: right;">X</button>
+    <form method="post" action="<?php echo base_url(); ?>index.php/QuestionsAndAnswers/submitQuestionComment">
+        <input type="hidden" name="qcommentInput" id="qcommentInput">
+        <textarea cols="40" rows="3" name="ques_comment" class="submitpopup"></textarea>
+        <input type="submit" value="Submit Comment">
+    </form>
 </div>
 </body>
 </html>
 <script>
 $(document).ready(function() {
+
+    $('#close').on('click', function () {
+        $('.center').hide();
+        $('.comment').show();
+    });
+
+    $('#closeqpopup').on('click', function () {
+        $('.qcomment').hide();
+        $('.comment').show();
+    });
+
 
     var urlParameters = new URLSearchParams(window.location.search);
     var param = urlParameters.get('qID'); 
@@ -143,7 +172,7 @@ $(document).ready(function() {
             var html3='';
             $.each(response['answers'], function(index, item) { 
                 html2+='<hr class="line"><p class="q_desc">'+item['Answer']+'</p><div class="flex_layout"><div>Answered on '+item['CreationDate'].substring(0,11)+'</div>';
-                html2+='<div>Answer By '+item['Username']+'</div><div class="actions"><div class="comment">comment</div>';
+                html2+='<div>Answer By '+item['Username']+'</div><div class="actions"><div class="comment" onclick="commentAns('+item['AnswerID']+')">comment</div>';
                 html2+='<div class="vote" onclick="upvoteAnswer('+item['AnswerID']+')">upvote</div><div id="voteA'+ item['AnswerID'] +'">'+item['Votes']+'</div><div class="vote" onclick="downvoteAnswer('+item['AnswerID']+')">downvote</div></div></div>';
                 // html2+='<div class="comments"><div>Comments</div><div class="pagination"><div>previous</div><div>next</div></div></div>'
                 html3='<div class="comments_panel">';
@@ -181,7 +210,7 @@ $(document).ready(function() {
             success: function(response) {
                 $.each(response, function(index, item) { 
                     html2+='<hr class="line"><p class="q_desc">'+item['Answer']+'</p><div class="flex_layout"><div>Answered on '+item['CreationDate'].substring(0,11)+'</div>';
-                    html2+='<div>Answer By '+item['Username']+'</div><div class="actions"><div class="comment">comment</div>';
+                    html2+='<div>Answer By '+item['Username']+'</div><div class="actions"><div class="comment" onclick="commentAns('+item['AnswerID']+')">comment</div>';
                     html2+='<div class="vote" onclick="upvoteAnswer('+item['AnswerID']+')">upvote</div><div id="voteA'+ item['AnswerID'] +'">'+item['Votes']+'</div><div class="vote" onclick="downvoteAnswer('+item['AnswerID']+')">downvote</div></div></div>';
                     // html2+='<div class="comments"><div>Comments</div><div class="pagination"><div>previous</div><div>next</div></div></div>';
                     html3='<div class="comments_panel">';
@@ -267,6 +296,22 @@ function downvoteQ($qID){
         });
 }
 
+function commentAns($aID){    
+    $('.center').show();
+    $('.comment').hide();
+    $('#acommentInput').val($aID);
+
+}
+
+function commentQues(){
+    var urlParameters = new URLSearchParams(window.location.search);
+    var param = urlParameters.get('qID');
+    $('.qcomment').show();
+    $('.comment').hide();
+    $('#qcommentInput').val(param);
+
+}
+
 function anssubmit(){
     var urlParameters = new URLSearchParams(window.location.search);
     var param = urlParameters.get('qID');
@@ -315,5 +360,39 @@ function anssubmit(){
         font-family: "Inria Sans", sans-serif;
         background-color: #ffffff;
         font-size: 16px;
+ }
+
+ .center {
+    left: 200px;
+    top: 1000px;
+    z-index: 1;
+    background-color: #69F845;
+    position: absolute;
+    margin: auto;
+    width: 60%;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.qcomment {
+    left: 200px;
+    top: 500px;
+    z-index: 1;
+    background-color: #69F845;
+    position: absolute;
+    margin: auto;
+    width: 60%;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.hideform {
+    display: none;
+}
+
+.submitpopup{
+    background-color: #d9d9d9;
+    width: 900px;
+    height: 80px;
  }
  </style>

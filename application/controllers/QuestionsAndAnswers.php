@@ -7,6 +7,7 @@ class QuestionsAndAnswers extends CI_Controller {
         parent::__construct();
         $this->load->model('Questions');
         $this->load->model('Categories');
+        $this->load->model('Answers');
         $this->load->library('session');
     }
 	public function askQuestion()
@@ -25,5 +26,21 @@ class QuestionsAndAnswers extends CI_Controller {
 		$userID=$this->session->userdata('userID');
 		$this->Questions->postQuestion($title,$description,$userID,$categoryID);
 		$this->load->view('homepage');
+	}
+
+	public function submitQuestionComment(){
+		$userID=$this->session->userdata('userID');
+		$qid= $this->input->post('qcommentInput');
+		$text= $this->input->post('ques_comment');
+		$this->Questions->submitComment($userID,$qid,$text);
+		$this->load->view('comments');
+	}
+
+	public function submitAnswerComment(){
+		$userID=$this->session->userdata('userID');
+		$aid= $this->input->post('acommentInput');
+		$text= $this->input->post('ans_comment');
+		$this->Answers->submitComment($userID,$aid,$text);
+		$this->load->view('comments');
 	}
 }
