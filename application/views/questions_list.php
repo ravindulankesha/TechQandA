@@ -29,7 +29,15 @@ include("searchbar.php");
             <div>Answers: <?php echo $question['answer_count'] ?></div>
             <div>Category: <?php echo $question['CategoryName'] ?></div>
             <div>Asked By: <?php echo $question['Username'] ?></div>
-            <div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID=<?php echo $question['QuestionID'];?>">Go to Question Page</a></div>
+            <div>
+            <?php if($this->session->userdata('userID')==null): ?>
+                <a href="<?php echo base_url();?>index.php/Navigation/login?>">
+            <?php endif; ?>
+            <?php if($this->session->userdata('userID')!=null): ?>
+                <a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID=<?php echo $question['QuestionID'];?>">               
+            <?php endif; ?>
+            Go to Question Page
+            </a></div>
         </div>
     <?php endforeach; ?>    
     <!-- <hr class="line">   
@@ -157,7 +165,13 @@ $(document).ready(function() {
                         html+='<div>Answers: ' +item['answer_count']+'</div>';
                         html+='<div>Category: '+item['CategoryName']+'</div>';
                         html+='<div>Asked By: '+item['Username']+'</div>';
-                        html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
+                        <?php if($this->session->userdata('userID')!=null): ?>
+                            html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
+                        <?php endif; ?>
+                        <?php if($this->session->userdata('userID')==null): ?>
+                            html+='<div><a href="<?php echo base_url();?>index.php/Navigation/login+'"> Go to Question Page</a></div></div>';
+                        <?php endif; ?>
+                        // html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
                     });
                     $('#questionArea').html(html);
                 },
