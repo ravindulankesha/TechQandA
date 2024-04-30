@@ -28,4 +28,8 @@ class Comments extends CI_Model{
         $query= $query->get();
         return $query->result_array();
     }
+
+    public function editComment($userID,$cid,$text){
+        
+    }
 }

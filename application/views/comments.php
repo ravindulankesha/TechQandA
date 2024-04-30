@@ -48,8 +48,8 @@ include("profile_base.php");
 <div class="overlay">
     <div class="center">
         <button id="close" class="popupclose" style="float: right;">X</button>
-        <form method="post" action="<?php echo base_url(); ?>index.php/QuestionsAndAnswers/submitAnswerComment">
-            <input type="hidden" name="commentid" id="acommentInput">
+        <form method="post" action="<?php echo base_url(); ?>index.php/ProfileNavigation/editComment">
+            <input type="hidden" name="commentid" id="commentInput">
             <textarea cols="40" rows="3" name="edit_comment" id="editcomment" class="submitpopup"></textarea>
             <input type="submit" value="Edit Comment">
         </form>
@@ -126,6 +126,7 @@ $(document).ready(function() {
 function edit(id,text){
     $('.overlay').show();
     $('#editcomment').val(text);
+    $('#commentInput').val(id);
 }
 </script>
 <style>

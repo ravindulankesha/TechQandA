@@ -5,6 +5,8 @@ class ProfileNavigation extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->library('session');
+        $this->load->model('Comments');
     }
 
 	public function profileQuestions()
@@ -20,5 +22,14 @@ class ProfileNavigation extends CI_Controller {
     public function profileComments()
 	{
 		$this->load->view('comments');
+	}
+
+	public function editComment(){
+		$userID=$this->session->userdata('userID');
+		$cid= $this->input->post('commentid');
+		$text= $this->input->post('edit_comment');
+		var_dump($userID,$cid,$text);
+		// $this->Comments->editComment($userID,$cid,$text);
+		// $this->load->view('comments');
 	}
 }
