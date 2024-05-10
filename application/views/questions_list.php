@@ -169,7 +169,7 @@ $(document).ready(function() {
                             html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
                         <?php endif; ?>
                         <?php if($this->session->userdata('userID')==null): ?>
-                            html+='<div><a href="<?php echo base_url();?>index.php/Navigation/login+'"> Go to Question Page</a></div></div>';
+                            html+='<div><a href="<?php echo base_url();?>index.php/Navigation/login"> Go to Question Page</a></div></div>';
                         <?php endif; ?>
                         // html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
                     });
