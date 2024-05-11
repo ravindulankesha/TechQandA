@@ -66,7 +66,7 @@ $(document).ready(function() {
                 html+='<div>Votes: '+item['Votes']+'</div>';
                 html+='<div>Submitted On: '+item['CreationDate'].substring(0,11)+'</div>';
                 // html+='<div>edit</div>';
-                html+='<div class="delete">delete</div>';
+                html+='<div class="delete" onclick="deleteA('+item['AnswerID']+')">delete</div>';
                 html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
             });
             $('#profile_ans_content').html(html);
@@ -96,7 +96,7 @@ $(document).ready(function() {
                     html+='<hr class="line"><div class="question">'+ item['Answer']+'</div><div class="question_details">';
                     html+='<div>Votes: '+item['Votes']+'</div>';
                     html+='<div>Submitted On: '+item['CreationDate'].substring(0,11)+'</div>';
-                    html+='<div class="delete">delete</div>';
+                    html+='<div class="delete" onclick="deleteA('+item['AnswerID']+')">delete</div>';
                     html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
                 });
                 $('#profile_ans_content').html(html);
@@ -109,6 +109,23 @@ $(document).ready(function() {
     });
     var questionView = new AnswerView({el: '#profile_answers_sort' });
 });
+
+function deleteA(aID){
+    $.ajax({
+            url: '<?php echo base_url();?>index.php/apis/UserAPI/deleteAnswer', 
+            type: 'POST',
+            data: { 
+                aID: aID
+            }, 
+            success: function(response) {
+                window.location.href = '<?php echo base_url();?>index.php/ProfileNavigation/profileAnswers';
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
+            }
+        });
+}
+
 </script>
 <style>
     #profile{

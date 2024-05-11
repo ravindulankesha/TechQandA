@@ -31,7 +31,7 @@ class Answers extends CI_Model{
     }
 
     public function read_userAs($uid,$sort){
-        $query= $this->db->select('questions.QuestionID, answers.Answer, answers.Votes, answers.CreationDate')->from('answers')->where('answers.UserID',$uid);
+        $query= $this->db->select('questions.QuestionID, answers.AnswerID, answers.Answer, answers.Votes, answers.CreationDate')->from('answers')->where('answers.UserID',$uid);
                 if($sort=='newest'){
                     $query->order_by('answers.CreationDate','DESC');
                 }
@@ -53,15 +53,59 @@ class Answers extends CI_Model{
         return $query->QuestionID;
     }
 
-    public function answerUpvote($id){
-        $this->db->set('Votes', 'Votes+1', false)->where('AnswerID' , $id)->update('answers');
+    public function answerUpvote($id,$uid){
+        $data = array(
+            'UserID' => $uid,
+            'AnswerID' => $id,
+            'VoteType' => 'Upvote'
+        );
+        
+        $query1=$this->db->insert('Votes',$data);
+        $query2=$this->db->set('Votes', 'Votes+1', false)->where('AnswerID' , $id)->update('answers');
 
         $query=$this->db->select("Votes")->from('answers')->where('AnswerID' , $id)->get();
         return $query->result_array();
     }
 
-    public function answerDownvote($id){
-        $this->db->set('Votes', 'Votes-1', false)->where('AnswerID' , $id)->update('answers');
+    public function answerChangetoUpvote($id,$uid){
+        $array = array('UserID' => $uid, 'AnswerID' => $id);
+        $data = array(
+            'VoteType' => 'Upvote'
+        );
+        $query1=$this->db->where($array)->update('votes',$data);
+        $query2=$this->db->set('Votes', 'Votes+2', false)->where('AnswerID' , $id)->update('answers');
+
+        $query=$this->db->select("Votes")->from('answers')->where('AnswerID' , $id)->get();
+        return $query->result_array();
+    }
+
+    public function checkVote($uid,$id){
+        $array = array('UserID' => $uid, 'AnswerID' => $id);
+        $query=$this->db->select('VoteType')->from('votes')->where($array)->get();
+        return $query->result_array();
+    }
+
+    public function answerDownvote($id,$uid){
+        $data = array(
+            'UserID' => $uid,
+            'AnswerID' => $id,
+            'VoteType' => 'Downvote'
+        );
+        
+        $query1=$this->db->insert('Votes',$data);
+
+        $query2=$this->db->set('Votes', 'Votes-1', false)->where('AnswerID' , $id)->update('answers');
+
+        $query=$this->db->select("Votes")->from('answers')->where('AnswerID' , $id)->get();
+        return $query->result_array();
+    }
+    public function answerChangetoDownvote($id,$uid){
+        $array = array('UserID' => $uid, 'AnswerID' => $id);
+        $data = array(
+            'VoteType' => 'Downvote'
+        );
+        $query1=$this->db->where($array)->update('votes',$data);
+        $query2=$this->db->set('Votes', 'Votes-2', false)->where('AnswerID' , $id)->update('answers');
 
         $query=$this->db->select("Votes")->from('answers')->where('AnswerID' , $id)->get();
         return $query->result_array();
@@ -87,4 +131,10 @@ class Answers extends CI_Model{
 
         $this->db->insert('comments', $data);
     }
+
+    public function delete($aID){
+        $this->db->where('AnswerID', $aID)
+                 ->delete('answers');
+    }
+    
 }

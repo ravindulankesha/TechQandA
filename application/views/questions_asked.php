@@ -142,7 +142,7 @@ $(document).ready(function() {
                 html+='<div>Answers: ' +item['answer_count']+'</div>';
                 html+='<div>Category: '+item['CategoryName']+'</div>';
                 html+='<div>Asked On: '+item['CreationDate'].substring(0,11)+'</div>';
-                html+='<div class="delete">delete</div>';
+                html+='<div class="delete" onclick="deleteQ('+item['QuestionID']+')">delete</div>';
                 html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
             });
             $('#questions_asked').html(html);
@@ -174,7 +174,7 @@ $(document).ready(function() {
                         html+='<div>Answers: ' +item['answer_count']+'</div>';
                         html+='<div>Category: '+item['CategoryName']+'</div>';
                         html+='<div>Asked On: '+item['CreationDate'].substring(0,11)+'</div>';
-                        html+='<div class="delete">delete</div>';
+                        html+='<div class="delete" onclick="deleteQ('+item['QuestionID']+')">delete</div>';
                         html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
                     });
                     $('#questions_asked').html(html);
@@ -187,8 +187,25 @@ $(document).ready(function() {
     });
     var questionView = new QuestionView({el: '#profile_select_Qs' });
     var questionView2 = new QuestionView({el: '#profile_select_sort'});
+
+    
 });
 
+function deleteQ(id){
+        $.ajax({
+            url: '<?php echo base_url();?>index.php/apis/UserAPI/deleteQuestion', 
+            type: 'POST',
+            data: { 
+                qID: id
+            }, 
+            success: function(response) {
+                window.location.href = '<?php echo base_url();?>index.php/ProfileNavigation/profileQuestions';
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
+            }
+        });
+    }
 
 </script>
 <style>

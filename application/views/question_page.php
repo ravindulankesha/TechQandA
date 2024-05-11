@@ -240,7 +240,12 @@ function upvoteAnswer($aID){
                 aID: $aID
             }, 
             success: function(response) {
-                $('#voteA'+$aID).html(response[0]['Votes']);
+                if(response!='none'){
+                    $('#voteA'+$aID).html(response[0]['Votes']);
+                }
+                else{
+                    console.log('success');
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);
@@ -256,7 +261,12 @@ function downvoteAnswer($aID){
                 aID: $aID
             }, 
             success: function(response) {
-                $('#voteA'+$aID).html(response[0]['Votes']);
+                if(response!='none'){
+                    $('#voteA'+$aID).html(response[0]['Votes']);
+                }
+                else{
+                    console.log('success');
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);
@@ -272,7 +282,12 @@ function upvoteQ($qID){
                 qID: $qID
             }, 
             success: function(response) {
-                $('#view_qvotes').html('Votes: '+response[0]['Votes']);
+                if(response!='none'){
+                    $('#view_qvotes').html('Votes: '+response[0]['Votes']);
+                }
+                else{
+                    console.log('success');
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);
@@ -288,7 +303,12 @@ function downvoteQ($qID){
                 qID: $qID
             }, 
             success: function(response) {
-                $('#view_qvotes').html('Votes: '+response[0]['Votes']);
+                if(response!='none'){
+                    $('#view_qvotes').html('Votes: '+response[0]['Votes']);
+                }
+                else{
+                    console.log(response);
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);

@@ -28,8 +28,7 @@ class ProfileNavigation extends CI_Controller {
 		$userID=$this->session->userdata('userID');
 		$cid= $this->input->post('commentid');
 		$text= $this->input->post('edit_comment');
-		var_dump($userID,$cid,$text);
-		// $this->Comments->editComment($userID,$cid,$text);
-		// $this->load->view('comments');
+		$this->Comments->editComment($userID,$cid,$text);
+		$this->load->view('comments');
 	}
 }

@@ -91,15 +91,29 @@ class Questions extends CI_Model{
         return $query->result_array();
     }
 
-    public function questionUpvote($id){
-        $this->db->set('Votes', 'Votes+1', false)->where('QuestionID' , $id)->update('questions');
+    public function questionUpvote($id,$uid){
+        $data = array(
+            'UserID' => $uid,
+            'QuestionID' => $id,
+            'VoteType' => 'Upvote'
+        );
+        
+        $query1=$this->db->insert('Votes',$data);
+        $query2=$this->db->set('Votes', 'Votes+1', false)->where('QuestionID' , $id)->update('questions');
 
         $query=$this->db->select("Votes")->from('questions')->where('QuestionID' , $id)->get();
         return $query->result_array();
     }
 
-    public function questionDownvote($id){
-        $this->db->set('Votes', 'Votes-1', false)->where('QuestionID' , $id)->update('questions');
+    public function questionDownvote($id,$uid){
+        $data = array(
+            'UserID' => $uid,
+            'QuestionID' => $id,
+            'VoteType' => 'Downvote'
+        );
+        
+        $query1=$this->db->insert('Votes',$data);
+        $query2=$this->db->set('Votes', 'Votes-1', false)->where('QuestionID' , $id)->update('questions');
 
         $query=$this->db->select("Votes")->from('questions')->where('QuestionID' , $id)->get();
         return $query->result_array();
@@ -113,5 +127,39 @@ class Questions extends CI_Model{
         );
         
         $this->db->insert('comments', $data);
+    }
+
+    public function checkVote($uid,$id){
+        $array = array('UserID' => $uid, 'QuestionID' => $id);
+        $query=$this->db->select('VoteType')->from('votes')->where($array)->get();
+        return $query->result_array();
+    }
+
+    public function changetoUpvote($id,$uid){
+        $array = array('UserID' => $uid, 'QuestionID' => $id);
+        $data = array(
+            'VoteType' => 'Upvote'
+        );
+        $query1=$this->db->where($array)->update('votes',$data);
+        $query2=$this->db->set('Votes', 'Votes+2', false)->where('QuestionID' , $id)->update('questions');
+
+        $query=$this->db->select("Votes")->from('questions')->where('QuestionID' , $id)->get();
+        return $query->result_array();
+    }
+    public function changetoDownvote($id,$uid){
+        $array = array('UserID' => $uid, 'QuestionID' => $id);
+        $data = array(
+            'VoteType' => 'Downvote'
+        );
+        $query1=$this->db->where($array)->update('votes',$data);
+        $query2=$this->db->set('Votes', 'Votes-2', false)->where('QuestionID' , $id)->update('questions');
+
+        $query=$this->db->select("Votes")->from('questions')->where('QuestionID' , $id)->get();
+        return $query->result_array();
+    }
+
+    public function deleteQ($qID){
+        $this->db->where('QuestionID', $qID)
+                 ->delete('questions');
     }
 }

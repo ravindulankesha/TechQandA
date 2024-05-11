@@ -272,6 +272,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         .delete{
             color: #CE3737;
+            cursor: pointer;
         }
 
         .selectMenu_profile{

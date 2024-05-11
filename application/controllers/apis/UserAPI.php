@@ -50,27 +50,78 @@ class UserAPI extends RestController {
     }
 
     function upvoteAnswer_get(){
+        $uid=$this->session->userID; 
         $id = $this->input->get('aID');
-        $response=$this->Answers->answerUpvote($id);
-        $this->response($response);
+        $checkVote= $this->Answers->checkVote($uid,$id);
+        if($checkVote==null){
+            $response=$this->Answers->answerUpvote($id,$uid);
+            $this->response($response);
+        }
+        elseif($checkVote[0]['VoteType']=='Downvote'){
+            $response=$this->Answers->answerChangetoUpvote($id,$uid);
+            $this->response($response);
+        }
+
+        else{
+            $this->response(array('none'));
+        }
     }
 
     function downvoteAnswer_get(){
         $id = $this->input->get('aID');
-        $response=$this->Answers->answerDownvote($id);
-        $this->response($response);
+        $uid=$this->session->userID;
+        $checkVote= $this->Answers->checkVote($uid,$id);
+        if($checkVote==null){
+            $response=$this->Answers->answerUpvote($id,$uid);
+            $this->response($response);
+        }
+        elseif($checkVote[0]['VoteType']=='Upvote'){
+            $response=$this->Answers->answerChangetoDownvote($id,$uid);
+            $this->response($response);
+        }
+
+        else{
+            $this->response(array('none'));
+        }
     }
 
     function upvoteQuestion_get(){
         $id = $this->input->get('qID');
-        $response=$this->Questions->questionUpvote($id);
-        $this->response($response);
+        $uid=$this->session->userID; 
+        $checkVote= $this->Questions->checkVote($uid,$id);
+        if($checkVote==null){
+            $response=$this->Questions->questionUpvote($id,$uid);
+            $this->response($response);
+        }
+        elseif($checkVote[0]['VoteType']=='Downvote'){
+            $response=$this->Questions->changetoUpvote($id,$uid);
+            $this->response($response);
+        }
+
+        else{
+            $this->response(array('none'));
+        }
     }
 
     function downvoteQuestion_get(){
         $id = $this->input->get('qID');
-        $response=$this->Questions->questionDownvote($id);
-        $this->response($response);
+        $uid=$this->session->userID;  
+        $checkVote= $this->Questions->checkVote($uid,$id);
+        if($checkVote==null){
+            $response=$this->Questions->questionDownvote($id,$uid);
+            $this->response($response);
+        }
+        elseif($checkVote[0]['VoteType']=='Upvote'){
+            $response=$this->Questions->changetoDownvote($id,$uid);
+            $this->response($response);
+        }
+
+        else{
+            $this->response(array('none'));
+        }
+        // $id = $this->input->get('qID');
+        // $response=$this->Questions->questionDownvote($id);
+        // $this->response($response);
     }
 
     function submitAnswer_post(){
@@ -79,5 +130,23 @@ class UserAPI extends RestController {
         $answer=$this->input->post('answer');
         $execution=$this->Answers->postAnswer($qID,$answer,$uid);
         $this->response($qID);
+    }
+
+    function deleteQuestion_post(){
+        $qID=$this->input->post('qID');
+        $delete=$this->Questions->deleteQ($qID);
+        $this->response(array('done'));
+    }
+
+    function deleteAnswer_post(){
+        $aID=$this->input->post('aID');
+        $delete=$this->Answers->delete($aID);
+        $this->response(array('done'));
+    }
+
+    function deleteComment_post(){
+        $cID=$this->input->post('cID');
+        $delete=$this->Comments->delete($cID);
+        $this->response(array('done'));
     }
 }

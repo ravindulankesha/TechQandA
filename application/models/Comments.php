@@ -30,6 +30,15 @@ class Comments extends CI_Model{
     }
 
     public function editComment($userID,$cid,$text){
-        
+        $array = array('UserID' => $userID, 'CommentID' => $cid);
+        $data = array(
+            'Comment' => $text
+        );
+        $this->db->where($array)->update('comments',$data);
+    }
+
+    public function delete($cID){
+        $this->db->where('CommentID', $cID)
+                 ->delete('comments');
     }
 }
