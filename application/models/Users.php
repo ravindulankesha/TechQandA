@@ -49,4 +49,9 @@ class Users extends CI_Model{
         $this->db->where('UserID', $uid);
         $this->db->delete('users');
     }
+
+    public function getDetails($uid){
+        $query=$this->db->select('Username, UserID, created')->from('users')->where('UserID',$uid)->get();
+        return $query->result_array();
+    }
 }

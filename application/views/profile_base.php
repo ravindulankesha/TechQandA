@@ -11,9 +11,9 @@ include("nav_bar.php");
             <div class="delete">Delete Profile</div>
         </div> -->
         <script type="text/template" id="profile-template">
-            <div><%= name %></div>
-            <div>joined: <%= joined %></div>
-            <div class="delete">Delete Profile</div>
+            <div><%= Username %></div>
+            <div>joined: <%= created %></div>
+            <a class="delete" href="<?php echo base_url(); ?>index.php/ProfileNavigation/deleteProfile">Delete Profile</div>
         </script>
         <div class="profile_nav">
             <div id="profileQ" style="cursor: pointer;" onclick="window.location='<?php echo base_url(); ?>index.php/ProfileNavigation/profileQuestions'">Questions asked</div>
@@ -26,15 +26,20 @@ include("nav_bar.php");
 <script>
 var ProfileModel = Backbone.Model.extend({
         defaults: {
-            name: '',
-            joined: ''
-        }
+            Username: '',
+            created: ''
+        },
+        url: '<?php echo base_url();?>index.php/apis/UserAPI/userData'
     });
 
 var ProfileView = Backbone.View.extend({
     tagName: 'div',
     className: 'profile_info',
     template: _.template($('#profile-template').html()),
+
+    initialize: function() {
+        this.listenTo(this.model, 'change', this.render);
+    },
 
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
@@ -43,15 +48,14 @@ var ProfileView = Backbone.View.extend({
 });
 
 $(document).ready(function() {
-    var profile = new ProfileModel({
-        name: 'Ravindu',
-        joined: '2022/09/11'
+    var profile = new ProfileModel();
+
+    profile.fetch({
+        success: function() {
+            var profileView = new ProfileView({ model: profile });
+            $('.container').prepend(profileView.render().el);
+        }
     });
-
-    // Instantiate Profile View
-    var profileView = new ProfileView({ model: profile });
-    $('.container').prepend(profileView.render().el);
-
-})
+});
 
 </script>

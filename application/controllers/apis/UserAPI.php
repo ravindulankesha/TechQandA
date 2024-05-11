@@ -149,4 +149,13 @@ class UserAPI extends RestController {
         $delete=$this->Comments->delete($cID);
         $this->response(array('done'));
     }
+
+    public function userData_get(){
+        $uid=$this->session->userID;
+        // $uid=3;
+        $details=$this->Users->getDetails($uid);
+        $details[0]['created']=substr($details[0]['created'],0,10);
+        $this->response($details[0]);
+	}
+
 }

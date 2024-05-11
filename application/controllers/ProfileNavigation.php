@@ -7,6 +7,7 @@ class ProfileNavigation extends CI_Controller {
         parent::__construct();
         $this->load->library('session');
         $this->load->model('Comments');
+        $this->load->model('Users');
     }
 
 	public function profileQuestions()
@@ -30,5 +31,13 @@ class ProfileNavigation extends CI_Controller {
 		$text= $this->input->post('edit_comment');
 		$this->Comments->editComment($userID,$cid,$text);
 		$this->load->view('comments');
+	}
+
+
+	public function deleteProfile(){
+		$userID=$this->session->userdata('userID');
+		$this->Users->delete($userID);
+		$this->session->userdata=null;
+		$this->load->view('homepage');
 	}
 }
