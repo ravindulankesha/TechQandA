@@ -26,7 +26,7 @@ include("searchbar.php");
         </div>
         <div id="q_comments_panel">   
             <hr class="line">
-            <p class="tiny_font">Have you done a composer self-update lately? Not sure if the 1.4.2 in your error message indicates version 1.4.2 but the latest version of composer is 1.6.2. And how much physical memory do you have? Is it a vm or cloud server? - robinwilliams87</p>
+            <p class="tiny_font"></p>
         </div>  
     </div>
     <div class="main_block">
@@ -65,7 +65,7 @@ include("searchbar.php");
                     
                 </div>
                 <hr class="line">
-                <p class="tiny_font">Have you done a composer self-update lately? Not sure if the 1.4.2 in your error message indicates version 1.4.2 but the latest version of composer is 1.6.2. And how much physical memory do you have? Is it a vm or cloud server? - robinwilliams87</p>
+                <p class="tiny_font"></p>
             </div>
         </div>
         
