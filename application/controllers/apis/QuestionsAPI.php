@@ -89,9 +89,6 @@ class QuestionsAPI extends RestController {
             $answers[$key]["comments"]=$this->Comments->commentsList($value['AnswerID']);
         }
         $qDetails['comments']=$comments;
-        // $result=array();
-        // array_push($result,$qDetails);
-        // array_push($result,$comments);
         $qDetails['answers']=$answers;
 
         $this->response($qDetails);

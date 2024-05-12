@@ -23,10 +23,6 @@ include("searchbar.php");
         <div class="comments">
             <div>Comments</div>
             
-            <!-- <div class="pagination">
-                <div>previous</div>
-                <div>next</div>
-            </div> -->
         </div>
         <div id="q_comments_panel">   
             <hr class="line">
@@ -67,43 +63,12 @@ include("searchbar.php");
                 <div class="comments">
                     <div>Comments</div>
                     
-                    <!-- <div class="pagination">
-                        <div>previous</div>
-                        <div>next</div>
-                    </div> -->
                 </div>
                 <hr class="line">
                 <p class="tiny_font">Have you done a composer self-update lately? Not sure if the 1.4.2 in your error message indicates version 1.4.2 but the latest version of composer is 1.6.2. And how much physical memory do you have? Is it a vm or cloud server? - robinwilliams87</p>
             </div>
         </div>
-        <!-- <hr class="line">
-            <p class="q_desc">I am trying to add HWIOAuthBundle to my project by running the below command.
-    composer require hwi/oauth-bundle php-http/guzzle6-adapter php-http/httplug-bundle
-    HWIOAuthBundle github: https://github.com/hwi/HWIOAuthBundle
-    then I try to run composer require I am getting the out of memory error.</p>
-        <div class="flex_layout">
-            <div>Answered on</div>
-            <div>Answer By</div>
-            <div class="actions">
-                <div class="comment">comment</div>
-                <div class="vote">upvote</div>
-                <div>34</div>
-                <div class="vote">downvote</div>
-            </div>
-            
-        </div>
-        <div class="comments_panel">
-            <div class="comments">
-                <div>Comments</div>
-                
-                <div class="pagination">
-                    <div>previous</div>
-                    <div>next</div>
-                </div>
-            </div>
-            <hr class="line">
-            <p class="tiny_font">Have you done a composer self-update lately? Not sure if the 1.4.2 in your error message indicates version 1.4.2 but the latest version of composer is 1.6.2. And how much physical memory do you have? Is it a vm or cloud server? - robinwilliams87</p>
-        </div> -->
+        
     </div> 
 
 </div>
@@ -143,7 +108,7 @@ $(document).ready(function() {
     var urlParameters = new URLSearchParams(window.location.search);
     var param = urlParameters.get('qID'); 
     $.ajax({
-        url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questionDetails',
+        url: '<?php echo base_url();?>index.php/apis/QuestionsAPI/questionDetails',
         type: 'GET',
         dataType: 'json',
         data: { 
@@ -174,7 +139,6 @@ $(document).ready(function() {
                 html2+='<hr class="line"><p class="q_desc">'+item['Answer']+'</p><div class="flex_layout"><div>Answered on '+item['CreationDate'].substring(0,11)+'</div>';
                 html2+='<div>Answer By '+item['Username']+'</div><div class="actions"><div class="comment" onclick="commentAns('+item['AnswerID']+')">comment</div>';
                 html2+='<div class="vote" onclick="upvoteAnswer('+item['AnswerID']+')">upvote</div><div id="voteA'+ item['AnswerID'] +'">'+item['Votes']+'</div><div class="vote" onclick="downvoteAnswer('+item['AnswerID']+')">downvote</div></div></div>';
-                // html2+='<div class="comments"><div>Comments</div><div class="pagination"><div>previous</div><div>next</div></div></div>'
                 html3='<div class="comments_panel">';
                 $.each(item['comments'], function(i, v) { 
                 html3+='<hr class="line"><p class="tiny_font">'+v['Comment']+'- '+v['Username']+'</p>';
@@ -201,7 +165,7 @@ $(document).ready(function() {
             var html2='';
             var html3=''; 
             $.ajax({
-            url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questionInfo', 
+            url: '<?php echo base_url();?>index.php/apis/QuestionsAPI/questionInfo', 
             type: 'GET',
             data: { 
                 qID: paramValue,
@@ -212,7 +176,6 @@ $(document).ready(function() {
                     html2+='<hr class="line"><p class="q_desc">'+item['Answer']+'</p><div class="flex_layout"><div>Answered on '+item['CreationDate'].substring(0,11)+'</div>';
                     html2+='<div>Answer By '+item['Username']+'</div><div class="actions"><div class="comment" onclick="commentAns('+item['AnswerID']+')">comment</div>';
                     html2+='<div class="vote" onclick="upvoteAnswer('+item['AnswerID']+')">upvote</div><div id="voteA'+ item['AnswerID'] +'">'+item['Votes']+'</div><div class="vote" onclick="downvoteAnswer('+item['AnswerID']+')">downvote</div></div></div>';
-                    // html2+='<div class="comments"><div>Comments</div><div class="pagination"><div>previous</div><div>next</div></div></div>';
                     html3='<div class="comments_panel">';
                     $.each(item['comments'], function(i, v) { 
                     html3+='<hr class="line"><p class="tiny_font">'+v['Comment']+'- '+v['Username']+'</p>';
@@ -234,7 +197,7 @@ $(document).ready(function() {
 
 function upvoteAnswer($aID){
     $.ajax({
-            url: 'http://localhost/TechQandA/index.php/apis/UserAPI/upvoteAnswer', 
+            url: '<?php echo base_url();?>index.php/apis/UserAPI/upvoteAnswer', 
             type: 'GET',
             data: { 
                 aID: $aID
@@ -255,7 +218,7 @@ function upvoteAnswer($aID){
 
 function downvoteAnswer($aID){
     $.ajax({
-            url: 'http://localhost/TechQandA/index.php/apis/UserAPI/downvoteAnswer', 
+            url: '<?php echo base_url();?>index.php/apis/UserAPI/downvoteAnswer', 
             type: 'GET',
             data: { 
                 aID: $aID
@@ -276,7 +239,7 @@ function downvoteAnswer($aID){
 
 function upvoteQ($qID){
     $.ajax({
-            url: 'http://localhost/TechQandA/index.php/apis/UserAPI/upvoteQuestion', 
+            url: '<?php echo base_url();?>index.php/apis/UserAPI/upvoteQuestion', 
             type: 'GET',
             data: { 
                 qID: $qID
@@ -297,7 +260,7 @@ function upvoteQ($qID){
 
 function downvoteQ($qID){
     $.ajax({
-            url: 'http://localhost/TechQandA/index.php/apis/UserAPI/downvoteQuestion', 
+            url: '<?php echo base_url();?>index.php/apis/UserAPI/downvoteQuestion', 
             type: 'GET',
             data: { 
                 qID: $qID
@@ -337,7 +300,7 @@ function anssubmit(){
     var param = urlParameters.get('qID');
     var answerval= $('#ansarea').val();
     $.ajax({
-            url: 'http://localhost/TechQandA/index.php/apis/UserAPI/submitAnswer', 
+            url: '<?php echo base_url();?>index.php/apis/UserAPI/submitAnswer', 
             type: 'POST',
             data: { 
                 qID: param,
@@ -366,7 +329,7 @@ function anssubmit(){
 
  .submit_comment{
     background-color: #d9d9d9;
-    width: 1210px;
+    width: 72vw;
     height: 100px;
  }
 
@@ -383,11 +346,11 @@ function anssubmit(){
  }
 
  .center {
-    left: 200px;
-    top: 1000px;
+    left: 5px;
+    top: -210px;
     z-index: 1;
     background-color: #69F845;
-    position: absolute;
+    position: relative;
     margin: auto;
     width: 60%;
     padding: 20px;
@@ -412,7 +375,7 @@ function anssubmit(){
 
 .submitpopup{
     background-color: #d9d9d9;
-    width: 900px;
+    width: 99%;
     height: 80px;
  }
  </style>

@@ -13,34 +13,7 @@ include("profile_base.php");
     </div>
 </div>
 <div class="question_content" id="profile_comms_results">
-    <!-- <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>Go to question page</div>
-        <div>edit</div>
-        <div class="delete">Delete</div>
-    </div>   
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>Go to question page</div>
-        <div>edit</div>
-        <div class="delete">Delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>Go to question page</div>
-        <div>edit</div>
-        <div class="delete">Delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>Go to question page</div>
-        <div>edit</div>
-        <div class="delete">Delete</div>
-    </div> -->
+    
 
 </div>
     </div>
@@ -65,19 +38,14 @@ $(document).ready(function() {
     });
 
     $.ajax({
-        url: 'http://localhost/TechQandA/index.php/apis/UserAPI/userComments', 
+        url: '<?php echo base_url();?>index.php/apis/UserAPI/userComments', 
         type: 'GET',
-        // data: {
-        //     filter: $('#profile_select_Qs').val(),
-        //     sort: $('#profile_select_sort').val()
-        // },
         success: function(response) {
             $('#profile_comms').html('RESULTS: '+ response.length);
             var html='';
             $.each(response, function(index, item) {                   
                 html+='<hr class="line"><div class="question">'+ item['Comment']+'</div><div class="question_details">';
                 html+='<div>Submitted On: '+item['CreationDate'].substring(0,11)+'</div>';
-                // html+='<div onclick="edit('+item['CommentID']+','+item['Comment']+')">edit</div>';
                 html+='<div onclick="edit('+item['CommentID']+','+'\''+item['Comment']+'\''+')">edit</div>';
 
                 html+='<div class="delete" onclick="deleteC('+item['CommentID']+')">delete</div>';
@@ -97,7 +65,7 @@ $(document).ready(function() {
         },
         render: function() {
             $.ajax({
-                url: 'http://localhost/TechQandA/index.php/apis/UserAPI/userComments', 
+                url: '<?php echo base_url();?>index.php/apis/UserAPI/userComments', 
                 type: 'GET',
                 data: {
                     sort: $('#profile_comms_sort').val()
@@ -178,6 +146,6 @@ function deleteC(cID){
 
 .submitpopup{
     background-color: #d9d9d9;
-    width: 900px;
+    width: 99%;
     height: 80px;
  }

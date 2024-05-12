@@ -119,9 +119,6 @@ class UserAPI extends RestController {
         else{
             $this->response(array('none'));
         }
-        // $id = $this->input->get('qID');
-        // $response=$this->Questions->questionDownvote($id);
-        // $this->response($response);
     }
 
     function submitAnswer_post(){

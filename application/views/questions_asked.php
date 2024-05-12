@@ -20,86 +20,7 @@ include("profile_base.php");
     </div>
 </div>
 <div class="question_content" id="questions_asked">
-    <!-- <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">Delete</div>
-    </div>   
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">Delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div class="delete">delete</div>
-    </div> -->
+    
 </div>
     </div>
 </div>
@@ -111,11 +32,10 @@ include("profile_base.php");
 $(document).ready(function() {
     
     $.ajax({
-        url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questionCategories',
+        url: '<?php echo base_url();?>index.php/apis/QuestionsAPI/questionCategories',
         type: 'GET',
         dataType: 'json',
         success: function(response) {
-            // Populate the dynamic select tag with options
             var dynamicSelect = $('#profile_select_Qs');
             $.each(response, function(index, item) {
                 dynamicSelect.append('<option value="' + item.CategoryID + '">' + item.CategoryName + '</option>');
@@ -127,12 +47,8 @@ $(document).ready(function() {
     });
 
     $.ajax({
-        url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/userQuestions', 
+        url: '<?php echo base_url();?>index.php/apis/QuestionsAPI/userQuestions', 
         type: 'GET',
-        // data: {
-        //     filter: $('#profile_select_Qs').val(),
-        //     sort: $('#profile_select_sort').val()
-        // },
         success: function(response) {
             $('#resultsProfileQs').html('RESULTS: '+ response.length);
             var html='';
@@ -151,7 +67,6 @@ $(document).ready(function() {
             console.error('Error:', error);
         }
     });
-    // Backbone View
     var QuestionView = Backbone.View.extend({
         el: '#profile_select_Qs',
         events: {
@@ -159,7 +74,7 @@ $(document).ready(function() {
         },
         render: function() {
             $.ajax({
-                url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/userQuestions', 
+                url: '<?php echo base_url();?>index.php/apis/QuestionsAPI/userQuestions', 
                 type: 'GET',
                 data: {
                     filter: $('#profile_select_Qs').val(),

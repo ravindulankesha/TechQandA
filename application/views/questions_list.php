@@ -40,86 +40,6 @@ include("searchbar.php");
             </a></div>
         </div>
     <?php endforeach; ?>    
-    <!-- <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>   
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>votes:22</div>
-        <div>answers:29</div>
-        <div>category:php</div>
-        <div>askedBy:ralph99</div>
-    </div> -->
 </div>
 
 </body>
@@ -127,11 +47,10 @@ include("searchbar.php");
 <script>
 $(document).ready(function() {
     $.ajax({
-        url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questionCategories',
+        url: '<?php echo base_url();?>index.php/apis/QuestionsAPI/questionCategories',
         type: 'GET',
         dataType: 'json',
         success: function(response) {
-            // Populate the dynamic select tag with options
             var dynamicSelect = $('#category');
             $.each(response, function(index, item) {
                 dynamicSelect.append('<option value="' + item.CategoryID + '">' + item.CategoryName + '</option>');
@@ -150,7 +69,7 @@ $(document).ready(function() {
         },
         render: function() {
             $.ajax({
-                url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questions', 
+                url: '<?php echo base_url();?>index.php/apis/QuestionsAPI/questions', 
                 type: 'GET',
                 data: {
                     filter: $('#category').val(),
@@ -171,7 +90,6 @@ $(document).ready(function() {
                         <?php if($this->session->userdata('userID')==null): ?>
                             html+='<div><a href="<?php echo base_url();?>index.php/Navigation/login"> Go to Question Page</a></div></div>';
                         <?php endif; ?>
-                        // html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
                     });
                     $('#questionArea').html(html);
                 },
@@ -181,40 +99,6 @@ $(document).ready(function() {
             });
         }
     });
-    // var questionView = new QuestionView();
-
-    //     var QuestionView = Backbone.View.extend({
-    //     el: '#category',
-    //     events: {
-    //         'change': 'render'
-    //     },
-    //     render: function() {
-    //         $.ajax({
-    //             url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questions', 
-    //             type: 'GET',
-    //             data: {
-    //                 filter: $('#category').val(),
-    //                 sort: $('#sort').val()
-    //             },
-    //             success: function(response) {
-    //                 $('#results').html('RESULTS: '+ response.length);
-    //                 var html='';
-    //                 $.each(response, function(index, item) {                   
-    //                     html+='<hr class="line"><div class="question">'+ item['Title']+'</div><div class="question_details">';
-    //                     html+='<div>Votes: '+item['Votes']+'</div>';
-    //                     html+='<div>Answers: ' +item['answer_count']+'</div>';
-    //                     html+='<div>Category: '+item['CategoryName']+'</div>';
-    //                     html+='<div>Asked By: '+item['Username']+'</div>';
-    //                     html+='<div>Go to Question Page</div></div>';
-    //                 });
-    //                 $('#questionArea').html(html);
-    //             },
-    //             error: function(xhr, status, error) {
-    //                 console.error('Error:', error);
-    //             }
-    //         });
-    //     }
-    // });
     var questionView = new QuestionView({el: '#category' });
     var questionView2 = new QuestionView({el: '#sort'});
 });

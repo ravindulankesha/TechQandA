@@ -13,7 +13,6 @@ class QuestionsAndAnswers extends CI_Controller {
 	public function askQuestion()
 	{
 		$title= $this->input->post('q_title');
-        // $category= $this->input->post('q_category');
         $category= $this->input->post('category');
 		$new_category= $this->input->post('new_category_name');
 		$description= $this->input->post('q_desc');
@@ -25,7 +24,7 @@ class QuestionsAndAnswers extends CI_Controller {
 		$categoryID=$categoryDetails->CategoryID;
 		$userID=$this->session->userdata('userID');
 		$this->Questions->postQuestion($title,$description,$userID,$categoryID);
-		$this->load->view('homepage');
+		$this->load->view('questions_asked');
 	}
 
 	public function submitQuestionComment(){

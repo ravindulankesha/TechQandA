@@ -15,34 +15,7 @@ include("profile_base.php");
     </div>
 </div>
 <div class="question_content" id="profile_ans_content">
-    <!-- <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>Go to question page</div>
-        <div>edit</div>
-        <div class="delete">Delete</div>
-    </div>   
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>Go to question page</div>
-        <div>edit</div>
-        <div class="delete">Delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>Go to question page</div>
-        <div>edit</div>
-        <div class="delete">Delete</div>
-    </div>
-    <hr class="line">   
-    <div class="question">PHP memory size exhausted</div>
-    <div class="question_details">
-        <div>Go to question page</div>
-        <div>edit</div>
-        <div class="delete">Delete</div>
-    </div> -->
+    
 
 </div>
     </div>
@@ -52,12 +25,9 @@ include("profile_base.php");
 <script>
 $(document).ready(function() {
     $.ajax({
-        url: 'http://localhost/TechQandA/index.php/apis/UserAPI/userAnswers', 
+        url: '<?php echo base_url();?>index.php/apis/UserAPI/userAnswers', 
         type: 'GET',
-        // data: {
-        //     filter: $('#profile_select_Qs').val(),
-        //     sort: $('#profile_select_sort').val()
-        // },
+        
         success: function(response) {
             $('#profile_ans_results').html('RESULTS: '+ response.length);
             var html='';
@@ -65,7 +35,6 @@ $(document).ready(function() {
                 html+='<hr class="line"><div class="question">'+ item['Answer']+'</div><div class="question_details">';
                 html+='<div>Votes: '+item['Votes']+'</div>';
                 html+='<div>Submitted On: '+item['CreationDate'].substring(0,11)+'</div>';
-                // html+='<div>edit</div>';
                 html+='<div class="delete" onclick="deleteA('+item['AnswerID']+')">delete</div>';
                 html+='<div><a href="<?php echo base_url();?>index.php/Navigation/questionPage?qID='+item['QuestionID']+'"> Go to Question Page</a></div></div>';
             });
@@ -76,7 +45,6 @@ $(document).ready(function() {
         }
     });
 
-        // Backbone View
         var AnswerView = Backbone.View.extend({
         el: '#profile_answers_sort',
         events: {
@@ -84,7 +52,7 @@ $(document).ready(function() {
         },
         render: function() {
             $.ajax({
-                url: 'http://localhost/TechQandA/index.php/apis/UserAPI/userAnswers', 
+                url: '<?php echo base_url();?>index.php/apis/UserAPI/userAnswers', 
                 type: 'GET',
                 data: {
                     sort: $('#profile_answers_sort').val()

@@ -5,11 +5,7 @@ include("nav_bar.php");
 ?>
 
     <div class="container">
-        <!-- <div class="profile_info">
-            <div>Ravindu</div>
-            <div>joined: 2022/09/11</div>
-            <div class="delete">Delete Profile</div>
-        </div> -->
+        
         <script type="text/template" id="profile-template">
             <div><%= Username %></div>
             <div>joined: <%= created %></div>

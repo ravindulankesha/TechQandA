@@ -13,8 +13,7 @@ class Categories extends CI_Model{
         $this->db->insert('categories',$data);
     }
 
-    public function getCategoryId($category){
-        
+    public function getCategoryId($category){        
         $this->db->from('categories');
         $this->db->where('CategoryName',$category);
         $result = $this->db->get();

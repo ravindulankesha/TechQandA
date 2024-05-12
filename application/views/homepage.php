@@ -34,5 +34,3 @@ include("nav_bar.php");
         color: #ffffff;
     }
 </style>
-<script>
-</script>

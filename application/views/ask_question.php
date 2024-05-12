@@ -19,14 +19,6 @@ include("nav_bar.php");
                             <label class="buttons_set" for="<?php echo $category['CategoryID'] ?>"><?php echo $category['CategoryName'] ?></label>
                         </span>    
                     <?php endforeach; ?>   
-                    <!-- <span>
-                        <input type="radio" value="php" name="category" class="categories" id="category1">
-                        <label class="buttons_set" id="cat1" for="category1">php</label>
-                    </span>
-                    <span>
-                        <input type="radio" value="cat2" name="category" class="categories" id="category2">
-                        <label class="buttons_set" id="cat2" for="category2">cat2</label>
-                    </span> -->
                     <span>
                         <input type="radio" value="newCat" name="category" class="categories" id="newCategory">
                         <label class="buttons_set" id="newCat" for="newCategory">New Category</label>
@@ -49,37 +41,6 @@ include("nav_bar.php");
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function(){
-
-            // var MyView = Backbone.View.extend({
-            //     el: '#categoriesSet', 
-                
-            //     initialize: function() {
-            //         this.render();
-            //     },
-                
-            //     render: function() {
-            //         var self = this;
-            //         $.ajax({
-            //             url: 'http://localhost/TechQandA/index.php/apis/QuestionsAPI/questionCategories', 
-            //             type: 'GET',
-            //             success: function(response) {
-            //                 var html='';
-            //                 $.each(response, function(index, item) {                   
-            //                     html+='<span><input type="radio" value="'+item['CategoryName']+'" name="category" class="categories" id="'+item['CategoryID']+'">';
-            //                     html+='<label class="buttons_set" id="'+ item['CategoryName']+ item['CategoryID']+ '" for="'+item['CategoryID']+'">'+ item['CategoryName'] +'</label>';
-            //                     html+='</span>';      
-            //                 });
-            //                 self.$el.append(html);
-            //             },
-            //             error: function(xhr, status, error) {
-            //                 console.error('Error:', status, error);
-            //             }
-            //         });
-            //     }
-            // });
-
-            // var myView = new MyView();
-
             $("input[type='radio']").click(function(){
                 console.log('sssss');
                 var radioValue = $("input[name='category']:checked").val();
